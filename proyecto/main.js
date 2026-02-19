@@ -7,6 +7,11 @@ let primerResultado = null;
 let segundoResultado = null;
 let incrementarMovimientos = 0;
 let aciertos = 0;
+let temporizador = false;
+let timer = 30;
+let timerInicial = 30;
+let tiempoRegresivo = null;
+let bloquearTargeta;
 
 
 
@@ -19,6 +24,7 @@ buttons.forEach( (button) =>{button.addEventListener('click',() =>{
 
 let mostrarMovimientos = document.getElementById('movimientos');
 let mostrarAciertos = document.getElementById('aciertos');
+let mostrarTiempo = document.getElementById('t-restante');
 
 
 // generacion de numeros aleatorios
@@ -26,9 +32,33 @@ let numbers = [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8];
 numbers = numbers.sort(()=>{return Math.random()-0.5})
 console.log(numbers);
 
+// funcciones
+function contarTiempo() {
+    tiempoRegresivo = setInterval(()=>{
+        timer--;
+        mostrarTiempo.innerHTML = `Tiempo: ${timer} segundos`;
+        if (timer == 0) {
+            clearInterval(tiempoRegresivo);
+            bloquearCard();
+        }
+    },1000);
+}
+function bloquearCard() {
+    for(let i=0; i<=15; i++){
+        bloquearTargeta = document.getElementById(i);
+        bloquearTargeta.innerHTML = numbers[i];
+        bloquearTargeta.disabled = true;
+    }
+}
+
 // Funcion principal 
 
 function destapar(id) {
+    if (temporizador == false) {
+        contarTiempo();    
+        temporizador = true;
+    }
+
     targetaDestapadas++;
     // console.log(targetaDestapadas);
 
@@ -58,13 +88,28 @@ function destapar(id) {
             
             //aumentar aciertos
             aciertos++;
-            mostrarAciertos.innerHTML = `Aciertos ${aciertos}`;
+            mostrarAciertos.innerHTML = `Aciertos: ${aciertos}`;
 
             // si los numeros son iguales restamos un movimiento
             incrementarMovimientos--;
             mostrarMovimientos.innerHTML = `Movimientos: ${incrementarMovimientos}`;
 
-        }
+            if (aciertos == 8) {
+                clearInterval(tiempoRegresivo);
+                mostrarAciertos.innerHTML = `Aciertos: ${aciertos}  crack!`;
+                mostrarTiempo.innerHTML = `Crack!  Tardaste solo ${timerInicial - timer} segundos`;
+                mostrarMovimientos.innerHTML = `Movimientos: ${incrementarMovimientos} crack!`;
+            }
 
+        }else{
+            setTimeout(() => {
+                targeta1.innerHTML = '';
+                targeta2.innerHTML= '';
+                targeta1.disabled = false;
+                targeta2.disabled = false;
+                targetaDestapadas = 0;
+            }, 700);
+        }
     }
 }
+

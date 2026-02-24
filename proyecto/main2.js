@@ -17,7 +17,8 @@ let bloquearTargeta;
 
 // Seleccionamos todos los botones 
 let buttons = document.querySelectorAll('button');
-buttons.forEach( (button) =>{button.addEventListener('click',() =>{
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
         destapar(button.id)
     })
 });
@@ -28,25 +29,25 @@ let mostrarTiempo = document.getElementById('t-restante');
 
 
 // generacion de numeros aleatorios
-let numbers = [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8];
-numbers = numbers.sort(()=>{return Math.random()-0.5})
+let numbers = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8];
+numbers = numbers.sort(() => { return Math.random() - 0.5 })
 console.log(numbers);
 
 // funcciones
 function contarTiempo() {
-    tiempoRegresivo = setInterval(()=>{
+    tiempoRegresivo = setInterval(() => {
         timer--;
         mostrarTiempo.innerHTML = `Tiempo: ${timer} segundos`;
         if (timer == 0) {
             clearInterval(tiempoRegresivo);
             bloquearCard();
         }
-    },1000);
+    }, 1000);
 }
 function bloquearCard() {
-    for(let i=0; i<=15; i++){
+    for (let i = 0; i <= 15; i++) {
         bloquearTargeta = document.getElementById(i);
-        bloquearTargeta.innerHTML = numbers[i];
+        bloquearTargeta.innerHTML = `<img src="./assets/${numbers[i]}.png" alt="">`;
         bloquearTargeta.disabled = true;
     }
 }
@@ -55,7 +56,7 @@ function bloquearCard() {
 
 function destapar(id) {
     if (temporizador == false) {
-        contarTiempo();    
+        contarTiempo();
         temporizador = true;
     }
 
@@ -66,8 +67,8 @@ function destapar(id) {
         // mostrar primer numero
         targeta1 = document.getElementById(id);
         primerResultado = numbers[id];
-        targeta1.innerHTML = primerResultado;
-
+        targeta1.innerHTML = `<img src="./assets/${primerResultado}.png" alt="">`;
+        // console.log(primerResultado);
         // deshabilitar primer numero
         targeta1.disabled = true;
         incrementarMovimientos++;
@@ -76,16 +77,16 @@ function destapar(id) {
     } else if (targetaDestapadas == 2) {
         targeta2 = document.getElementById(id);
         segundoResultado = numbers[id];
-        targeta2.innerHTML = segundoResultado;
+        targeta2.innerHTML = `<img src="./assets/${segundoResultado}.png" alt="">`;
 
         targeta2.disabled = true;
 
         incrementarMovimientos++;
         mostrarMovimientos.innerHTML = `Movimientos: ${incrementarMovimientos}`;
 
-        if (primerResultado == segundoResultado){
+        if (primerResultado == segundoResultado) {
             targetaDestapadas = 0;
-            
+
             //aumentar aciertos
             aciertos++;
             mostrarAciertos.innerHTML = `Aciertos: ${aciertos}`;
@@ -101,10 +102,10 @@ function destapar(id) {
                 mostrarMovimientos.innerHTML = `Movimientos: ${incrementarMovimientos} crack!`;
             }
 
-        }else{
+        } else {
             setTimeout(() => {
                 targeta1.innerHTML = '';
-                targeta2.innerHTML= '';
+                targeta2.innerHTML = '';
                 targeta1.disabled = false;
                 targeta2.disabled = false;
                 targetaDestapadas = 0;
@@ -112,4 +113,7 @@ function destapar(id) {
         }
     }
 }
+
+
+
 

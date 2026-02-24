@@ -10,6 +10,7 @@ main{
     display: flex;
     align-items: center;
 }
+
 .section1{
     background-color: rgba(255,255,255,0.2);
     padding: 0 10px 10px 10px;
@@ -24,13 +25,30 @@ button{
     font-size: 40px;
     color: white;
 }
+.modo-numeros{
+    height: 45px;
+    width: 80px;
+    font-size: 10px;
+    color: black;
+    border-radius: 10px;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+.modo-imagenes{
+    height: 45px;
+    width: 80px;
+    font-size: 10px;
+    color: black;
+    border-radius: 10px;
+    margin-top: 10px;
+}
 button:hover{
     cursor: pointer;
 }
 .section2{
     background-color: rgb(255,255,255,0.2);
     width: 250px;
-    height: 400px;
+    height: 510px;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
     padding: 0 20px;
@@ -47,4 +65,7 @@ footer{
 }
 a{
     text-decoration: none;
+}
+img{
+    width: 100%;
 }
